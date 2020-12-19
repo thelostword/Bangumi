@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'iconfont';
+  /* project id 2232911 */
+  src:
+    url('https://at.alicdn.com/t/font_2232911_0x0g7vi9tn9q.woff2') format('woff2'),
+    url('https://at.alicdn.com/t/font_2232911_0x0g7vi9tn9q.woff') format('woff'),
+    url('https://at.alicdn.com/t/font_2232911_0x0g7vi9tn9q.ttf') format('truetype'),
+    url('https://at.alicdn.com/t/font_2232911_0x0g7vi9tn9q.svg#iconfont') format('svg');
+}
+
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-close:before {
+  content: "\e657";
+}
+
+.icon-rili:before {
+  content: "\e61a";
+}
+
+.icon-send:before {
+  content: "\e663";
+}
+
+.icon-add:before {
+  content: "\e60d";
+}
+
+.icon-zhuye:before {
+  content: "\e601";
+}
+
+.icon-shoucang:before {
+  content: "\e642";
+}
+
+.icon-chaozhankai:before {
+  content: "\ea9b";
+}
+
+.icon-time:before {
+  content: "\e611";
+}
+
+.icon-sousuo:before {
+  content: "\e729";
+}
+
+.icon-tongzhi:before {
+  content: "\e61e";
+}
+
+.icon-menu:before {
+  content: "\e600";
+}

@@ -1,0 +1,106 @@
+{
+  "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/collection/collection",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white",
+        "app-plus": {
+          "pullToRefresh": {
+            "support": true,
+            "offset": "125px",
+            "color": "#f09199",
+            "style": "circle"
+          }
+        }
+      }
+    }, {
+      "path": "pages/timeline/timeline",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white",
+        "app-plus": {
+          "pullToRefresh": {
+            "support": true,
+            "offset": "125px",
+            "color": "#f09199",
+            "style": "circle"
+          }
+        }
+      }
+    },
+    {
+      "path": "pages/rakuen/rakuen",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white",
+        "app-plus": {
+          "pullToRefresh": {
+            "support": true,
+            "offset": "125px",
+            "color": "#f09199",
+            "style": "circle"
+          }
+        }
+      }
+    },
+    {
+      "path": "pages/search/search",
+      "style": {
+        "navigationBarTitleText": "搜索",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/calendar/calendar",
+      "style": {
+        "navigationBarTitleText": "时间表",
+        "enablePullDownRefresh": false,
+        "app-plus": {
+          "pullToRefresh": {
+            "support": true,
+            "offset": "0",
+            "color": "#f09199",
+            "style": "circle"
+          }
+        }
+      }
+
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#f09199",
+    "backgroundColor": "#f8f8f8"
+  },
+  "tabBar": {
+    "color": "#777777",
+    "selectedColor": "#f09199",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [{
+      "pagePath": "pages/timeline/timeline",
+      "iconPath": "static/tabbar/timeline.png",
+      "selectedIconPath": "static/tabbar/timeline_active.png",
+      "text": "时间胶囊"
+    }, {
+      "pagePath": "pages/collection/collection",
+      "iconPath": "static/tabbar/collect.png",
+      "selectedIconPath": "static/tabbar/collect_active.png",
+      "text": "收藏"
+    }, {
+      "pagePath": "pages/rakuen/rakuen",
+      "iconPath": "static/tabbar/rakuen.png",
+      "selectedIconPath": "static/tabbar/rakuen_active.png",
+      "text": "超展开"
+    }]
+  }
+}

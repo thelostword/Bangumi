@@ -1,0 +1,56 @@
+.rakuen {
+  padding: 20rpx 30rpx;
+  min-height: 75vh;
+  &-list {
+    margin-bottom: 20rpx;
+  }
+  &-item {
+    display: flex;
+    &:not(:last-child) {
+      margin-bottom: 30rpx;
+    }
+    &-avatar {
+      width: 75rpx;
+      height: 75rpx;
+      border-radius: 50%;
+      margin-right: 20rpx;
+      overflow: hidden;
+      >image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &-inner {
+      flex: 1;
+      &__title {
+        margin-top: -8rpx;
+        margin-bottom: 10rpx;
+        >text {
+          font-size: 28rpx;
+          color: $color-theme;
+          line-height: 36rpx;
+          &:last-child {
+            color: $color-7;
+            font-size: 26rpx;
+            margin-left: 10rpx;
+          }
+        }
+      }
+      &__from {
+        display: flex;
+        >text {
+          font-size: 26rpx;
+          color: $color-7;
+          &:first-child {
+            max-width: 350rpx;
+            margin-right: 20rpx;
+            @include single-text();
+          }
+          &:last-child {
+            font-size: 24rpx;
+          }
+        }
+      }
+    }
+  }
+}

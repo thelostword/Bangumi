@@ -1,0 +1,26 @@
+.head-tab {
+    &__container {
+      width: 100%;
+      position: fixed;
+      background-color: $color-white;
+      z-index: $scroll-tab-index;
+      box-shadow: 0 7rpx 10rpx rgba($color: #000000, $alpha: .06);
+    }
+    &__wrap {
+        display: flex;
+        align-items: center;
+        padding: 0 20rpx;
+        height: 50px;
+    }
+    &__btn {
+        padding: 0 10rpx;
+    }
+    &__menu {
+      width: 590rpx;
+    }
+    &::after {
+      display: inline-block;
+      content: '';
+      height: 50px;
+    }
+}
