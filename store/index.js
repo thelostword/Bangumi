@@ -10,14 +10,14 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         sideBarStatus: false,
-        curPage: 'home'
+        userInfo: null
     },
     mutations: {
         setSideBarStatus(state, data) {
             state.sideBarStatus = data
         },
-        setCurPage(state, data) {
-            state.curPage = data
+        setUserInfo(state, data) {
+            state.userInfo = data
         }
     },
     actions: {},

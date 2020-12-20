@@ -74,10 +74,20 @@
                 isLogin: false
             }
         },
+        computed: {
+            userInfo() {
+                return this.$store.state.userInfo
+            }
+        },
         onShow() {
-            if(uni.getStorageSync('token')) {
-                this.isLogin = true
-                this.userName = uni.getStorageSync('_userInfo').user_name
+            if(!this.isLogin) {
+                if(uni.getStorageSync('token')) {
+                    if(this.userInfo && this.userInfo.name) {
+                        this.isLogin = true
+                    } else {
+                        this.$layer.msg('为获取到用户名')
+                    }
+                }
             }
         },
         onLoad() {
@@ -99,17 +109,11 @@
                 let res = await timeline(this.innerType !== 0 ? true : false, {
                     type: this.curType,
                     page: this.curPage,
-                    user_name: this.userName,
+                    user_name: this.userInfo && this.userInfo.name,
                     self: this.innerType === 2
                 })
-                this.timeLineData = this.timeLineData.concat(res.list)
-                this.lastData = res.list
-                // if(!uni.getStorageSync('_userInfo') && res.userInfo.user_name) {
-                //     let userInfo = {}
-                //     userInfo.user_name = res.userInfo.user_name.match(/\/(\w*)$/)[1]
-                //     userInfo.user_avatar = res.userInfo.user_avatar
-                //     uni.setStorageSync('_userInfo', userInfo)
-                // }
+                this.timeLineData = this.timeLineData.concat(res)
+                this.lastData = res
                 this.isLoading = false
             },
             // 获取当前时间胶囊索引
@@ -129,9 +133,6 @@
                     return
                 }
                 if(this.isLoading) {
-                    return
-                }
-                if(e.type===2 && !this.isLogin) {
                     return
                 }
                 this.innerType = e.type

@@ -12,8 +12,12 @@
             :style="{transform: showSideBar ? 'translateX(75vw)' : 'translateX(0)'}"
         >
             <view class="sidebar-user">
-                <image :src="userInfo.user_avatar | addUrl" mode="widthFix"></image>
-                <text> {{ userInfo.user_name }}</text>
+                <image :src="userInfo && userInfo.avatar" mode="widthFix"></image>
+                <view>
+                    <text>{{ userInfo && userInfo.nick_name }}</text>
+                    <text>@{{ userInfo && userInfo.name }}</text>
+                </view>
+                <text>{{ userInfo && userInfo.sign }}</text>
             </view>
             <view class="sidebar-menu">
                 <view class="sidebar-menu-item"
@@ -36,13 +40,15 @@
         data() {
             return {
                 startX: 0,
-                userInfo: uni.getStorageSync('_userInfo'),
                 menuList: menuList
             }
         },
         computed: {
             showSideBar() {
                 return this.$store.state.sideBarStatus
+            },
+            userInfo() {
+                return this.$store.state.userInfo
             }
         },
         methods: {
@@ -104,7 +110,7 @@
             width: 100%;
             height: 25vh;
             background-color: $color-theme;
-            padding: 40rpx 300rpx 40rpx 40rpx;
+            padding: 40rpx;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -114,11 +120,24 @@
                 height: 150rpx;
                 border-radius: 50%;
             }
-            >text {
+            >view {
                 margin-top: 10rpx;
                 color: $color-white;
                 font-size: 36rpx;
                 font-weight: 400;
+                >text {
+                    &:last-child {
+                        font-size: 28rpx;
+                        color: rgba($color: $color-white, $alpha: .8);
+                        margin-left: 10rpx;
+                    }
+                }
+            }
+            >text {
+                color: $color-white;
+                margin-top: 15rpx;
+                font-size: 26rpx;
+                @include single-text();
             }
         }
         &-menu {

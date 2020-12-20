@@ -51,7 +51,7 @@
 
 <script>
     import { menuList, navTab } from './config.js'
-    import { collection } from '../../service/api.js'
+    import { collection, user } from '../../service/api.js'
     export default {
         data() {
             return {
@@ -69,20 +69,17 @@
                 startX: 0
             }
         },
-        onLoad() {
-            if(uni.getStorageSync('token')) {
-                this.isLogin = true
-                this.userName = uni.getStorageSync('_userInfo').user_name
-                uni.startPullDownRefresh()
+        computed: {
+            userInfo() {
+                return this.$store.state.userInfo
             }
+        },
+        onLoad() {
+            // uni.startPullDownRefresh()
         },
         onShow() {
             if(!this.isLogin) {
-                if(uni.getStorageSync('token')) {
-                    this.isLogin = true
-                    this.userName = uni.getStorageSync('_userInfo').user_name
-                    uni.startPullDownRefresh()
-                }
+                uni.startPullDownRefresh()
             }
         },
         watch: {
@@ -92,6 +89,16 @@
             }
         },
         methods: {
+            // 获取用户信息
+            async getUserInfo() {
+                let res = await user()
+                if(res) {
+                    this.$store.commit('setUserInfo', res)
+                } else {
+                    this.$layer.msg('用户信息获取失败，请重试')
+                }
+            },
+            // 获取收藏数据
             async initData() {
                 if(this.isLoading) {
                     return
@@ -99,7 +106,7 @@
                 this.isLoading = true
                 let res = await collection({
                     type: this.curType,
-                    name: this.userName,
+                    name: this.userInfo.name,
                     page: this.curPage,
                     event: this.innerType
                 })
@@ -168,8 +175,12 @@
                 return
             }
             if(!this.isLogin) {
-                uni.stopPullDownRefresh()
-                return
+                if(!uni.getStorageSync('token')) {
+                    uni.stopPullDownRefresh()
+                    return
+                }
+                this.isLogin = true
+                await this.getUserInfo()
             }
             this.curPage = 1
             this.collectionData = []

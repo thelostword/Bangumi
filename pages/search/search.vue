@@ -2,62 +2,93 @@
     <view class="search">
         <view class="search-head">
             <view class="search-head__wrap">
-                <menu-btn type="icon" :list="menuList"></menu-btn>
-                <input type="text" value="" placeholder="搜索..." confirm-type="search" />
+                <menu-btn type="icon" :list="menuList" @click="getCurMenuIndex"></menu-btn>
+                <input type="text"
+                    placeholder="搜索..."
+                    confirm-type="search"
+                    @confirm="goSearchRes"
+                />
             </view>
         </view>
         <view class="search-history">
             <view class="search-history-head">
                 <view class="search-history-head__wrap">
                     <text>搜索历史</text>
-                    <text>清空搜索记录</text>
+                    <text @click="clearHistory">清空搜索记录</text>
                 </view>
             </view>
-            <view class="search-history-list" v-if="false">
-                <view class="search-history-item">
-                    <view>十二国记</view>
-                    <Icon name="close" size="36"/>
+            <view class="search-history-list" v-if="searchHistory.length">
+                <view class="search-history-item"
+                    v-for="(item,index) in searchHistory"
+                    :key="index"
+                    @click="goSearchPage(item)"
+                >
+                    <view>{{ item }}</view>
+                    <Icon name="close" size="36" @click.native.stop="removeHistory(index)"/>
                 </view>
             </view>
-            <nodata>没有搜索记录</nodata>
+            <nodata v-else>没有搜索记录</nodata>
         </view>
 
     </view>
 </template>
 
 <script>
+    import { menuList } from './config.js'
     export default {
         data() {
             return {
-                menuList: [{
-                    name: '条目',
-                    type: ''
-                },{
-                    name: '动画',
-                    type: 'say'
-                },{
-                    name: '书籍',
-                    type: 'say'
-                },{
-                    name: '游戏',
-                    type: 'say'
-                },{
-                    name: '音乐',
-                    type: 'say'
-                },{
-                    name: '三次元',
-                    type: 'say'
-                },{
-                    name: '人物',
-                    type: 'say'
-                },{
-                    name: '虚构角色',
-                    type: 'say'
-                },{
-                    name: '现实人物',
-                    type: 'say'
-                }]
-            };
+                menuList: menuList,
+                searchType: 'all',
+                searchHistory: []
+            }
+        },
+        onShow() {
+            let history = uni.getStorageSync('searchHistory')
+            if(history) {
+                this.searchHistory = history
+            }
+        },
+        methods: {
+            // 键盘点击完成事件
+            goSearchRes(e) {
+                this.searchHistory.unshift(e.detail.value)
+                uni.setStorageSync('searchHistory', this.searchHistory)
+                uni.navigateTo({
+                    url: `/pages/search_result/search_result?type=${this.searchType}&val=${e.detail.value}`
+                })
+            },
+            goSearchPage(val) {
+                uni.navigateTo({
+                    url: `/pages/search_result/search_result?type=${this.searchType}&val=${val}`
+                })
+            },
+            // 删除指定记录
+            removeHistory(i) {
+                this.searchHistory.splice(i, 1)
+                uni.setStorageSync('searchHistory', this.searchHistory)
+            },
+            // 清空历史记录
+            clearHistory() {
+                if(!this.searchHistory.length) {
+                    this.$layer.msg('没有可清理的数据！')
+                    return
+                }
+                uni.showModal({
+                    title: '提示',
+                    content: '确认清空历史记录吗？',
+                    success: res => {
+                        if(res.confirm) {
+                            this.searchHistory = []
+                            uni.setStorageSync('searchHistory', this.searchHistory)
+                        }
+                    }
+                })
+            },
+            // menu菜单点击事件
+            getCurMenuIndex(e) {
+                this.searchType = e.type
+            }
         }
     }
 </script>
